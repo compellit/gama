@@ -94,7 +94,7 @@ def main(cf, origfile, infile):
                 "stressed_syllables": " ".join(map(str, result[3])),
                 "no_extra_rhythmic": " ".join(map(str, result[4]))
             })
-    return all_scansion_out, results_data
+    return esc, all_scansion_out, results_data
 
 if __name__ == "__main__":
     for mod in [gumper, ut, cf]:
