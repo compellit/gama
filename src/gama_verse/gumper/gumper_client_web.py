@@ -65,7 +65,7 @@ def main(cf, origfile, infile):
             # Write output table lines
             postpro_txt = f"{result[1]}"
             # format for desktop output
-            out_format = (f"<tr><td style='text-align:right'><span style='display:none'>{idx+1}</span>{idx+1}.</td>"
+            out_format = (f"<tr><td style='text-align:right'><span style='display:none'>{idx+1}</span>{idx+1}</td>"
                   f"<td style='padding-left:1em'>{orig_lines[idx]}</td>" 
                   f"<td class='col-preprocessing'>{postpro_txt}"
                   f"</td><td style='padding-left:3em;text-align:right'>{result[2]}"
@@ -76,7 +76,7 @@ def main(cf, origfile, infile):
             # Preprocessed text is repeated in second row for each line (but hidden) so that search finds both rows.
             # Syllable count and stressed positions are on same cell, but each aligns to one side c/o display: flex
             # and justify-content: space-between
-            out_format_mobile = (f"<tr><td style='text-align:right;border:0'><span style='display:none'>{idx+1}</span>{idx+1}.</td>"
+            out_format_mobile = (f"<tr><td style='text-align:right;border:0'><span style='display:none'>{idx+1}</span>{idx+1}</td>"
                   f"<td>{orig_lines[idx]}<br/>" 
                   f"<span class='inline-prepro' style='color:darkgray;display:none'>{postpro_txt}</span></td></tr>\n"
                   f"<tr><td><span style='display:none'>{idx+1.5}</span></td><td style='display: flex; justify-content: space-between; width: 100%;'><span style='text-align:left;padding-left:1.5em;'>{result[2]}<span style='display:none'>{postpro_txt}</span></span>"
