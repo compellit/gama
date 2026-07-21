@@ -1,9 +1,9 @@
-import edcosts
-import editor
+from . import edcosts
+from . import editor
 import gzip
 from importlib import reload
 
-import normconfig as nc
+from . import normconfig as nc
 import sys
 
 

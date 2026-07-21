@@ -1,8 +1,12 @@
 from importlib import reload
 from pathlib import Path
 
-import config as cf
-import grapheme2syllable as g2s
+try:
+    from . import config as cf
+    from . import grapheme2syllable as g2s
+except ImportError:  # Support direct execution from the preprocessing directory.
+    import config as cf
+    import grapheme2syllable as g2s
 
 
 if __name__ == "__main__":
@@ -31,4 +35,3 @@ if __name__ == "__main__":
         #
         # with output_file.open("w") as f:
         #     f.write("\n".join(syllables))
-

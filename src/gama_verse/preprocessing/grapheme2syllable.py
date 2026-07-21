@@ -22,7 +22,10 @@ from copy import copy
 from collections import OrderedDict
 import logging
 import re
-import utils as ut
+try:
+    from . import utils as ut
+except ImportError:  # Support direct execution from the preprocessing directory.
+    import utils as ut
 
 DBG = False
 

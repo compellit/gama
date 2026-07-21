@@ -3,7 +3,7 @@ import logging
 import re
 import sys
 
-from normalization import normconfig as tc
+from . import normconfig as tc
 
 
 ed_logger = logging.getLogger("main.editor")

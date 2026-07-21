@@ -16,7 +16,10 @@ if TYPE_CHECKING:
 utils_logger = logging.getLogger("main.utils")
 
 
-import grapheme2syllable as g2s
+try:
+    from . import grapheme2syllable as g2s
+except ImportError:  # Support direct execution from the preprocessing directory.
+    import grapheme2syllable as g2s
 
 # stress disambiguation cases =======================================================
 

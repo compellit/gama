@@ -11,14 +11,22 @@ import time
 import stanza
 from stanza import DownloadMethod
 
-import config as cf
-from data import stress_info as sti
-import grapheme2syllable as g2s
-from normalization import lm_manager as lmg
-from normalization import normalizer
-from normalization import normconfig as ncf
-
-import utils as ut
+try:
+    from . import config as cf
+    from .data import stress_info as sti
+    from . import grapheme2syllable as g2s
+    from .normalization import lm_manager as lmg
+    from .normalization import normalizer
+    from .normalization import normconfig as ncf
+    from . import utils as ut
+except ImportError:  # Support direct execution from the preprocessing directory.
+    import config as cf
+    from data import stress_info as sti
+    import grapheme2syllable as g2s
+    from normalization import lm_manager as lmg
+    from normalization import normalizer
+    from normalization import normconfig as ncf
+    import utils as ut
 
 
 PUNCT_TO_REMOVE = ".,;?!¿¡:«»()”“„"

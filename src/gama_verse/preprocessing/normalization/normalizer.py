@@ -6,9 +6,9 @@ import pickle
 import re
 import types
 
-from normalization import editor
-from normalization import normconfig as nc
-from normalization import normo as nmo
+from . import editor
+from . import normconfig as nc
+from . import normo as nmo
 
 
 norm_logger = logging.getLogger("main.normalizer")
@@ -27,7 +27,7 @@ class Normalizer:
         assert self.lang in nc.LANGUAGES, f"Language {self.lang} is not supported. Supported languages: {nc.LANGUAGES}"
         self.IVDICO = norm_config.IVDICO if self.lang == "gl" else norm_config.IVDICO_ES
         self.vocab = self._load_vocab()
-        from normalization import edcosts as edit_costs
+        from . import edcosts as edit_costs
         self.edit_costs = edit_costs_o or edit_costs
         self.edimgr = self._load_editor()
     
