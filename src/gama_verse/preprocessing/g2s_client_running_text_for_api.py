@@ -499,7 +499,7 @@ def apply_syllabification(
     return out_lines, out_lines_running_text
 
 
-def scansion_prepro_main(input_file,nglm,preprocess=False,stress_marks="acute",destress=False,normalize=False,spanishfy=False,possessives=False,possessives_restore_vowel=False,batch_id="",batch_comment="",debug_g2s=False):
+def scansion_prepro_main(input_file,nglm,nlp,nmlzr,nmlzr_es,preprocess=False,stress_marks="acute",destress=False,normalize=False,spanishfy=False,possessives=False,possessives_restore_vowel=False,batch_id="",batch_comment="",debug_g2s=False):
     reload(cf)
     reload(g2s)
     reload(ncf)
@@ -536,19 +536,9 @@ def scansion_prepro_main(input_file,nglm,preprocess=False,stress_marks="acute",d
     with open(input_file, "r", encoding="utf8") as f:
         lines_to_syllabify = f.readlines()
     
-    # Prepare normalization, called by apply_syllabification
-    nmlzr = None
-    nmlzr_es = None
-    if normalize:
-        nmlzr = normalizer.Normalizer(ncf)
-        nmlzr_es = normalizer.Normalizer(ncf, lang="es")
-        #pos_tagger = 
-    else:
-        print("Normalization off, run with --normalize to enable.")
     
-    # Stanza
-    nlp = stanza.Pipeline(lang="gl", package="treegal", processors="tokenize,pos",
-                          download_method=DownloadMethod.REUSE_RESOURCES)
+    
+    
 
 
     # Syllabification
