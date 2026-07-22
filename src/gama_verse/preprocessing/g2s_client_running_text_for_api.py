@@ -499,7 +499,7 @@ def apply_syllabification(
     return out_lines, out_lines_running_text
 
 
-def stz_prepro_main(input_file,nglm,preprocess=False,stress_marks="acute",destress=False,normalize=False,spanishfy=False,possessives=False,possessives_restore_vowel=False,batch_id="",batch_comment="",debug_g2s=False):
+def scansion_prepro_main(input_file,nglm,preprocess=False,stress_marks="acute",destress=False,normalize=False,spanishfy=False,possessives=False,possessives_restore_vowel=False,batch_id="",batch_comment="",debug_g2s=False):
     reload(cf)
     reload(g2s)
     reload(ncf)
