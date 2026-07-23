@@ -500,12 +500,7 @@ def apply_syllabification(
 
 
 def scansion_prepro_main(input_file,nglm,nlp,nmlzr,nmlzr_es,preprocess=False,stress_marks="acute",destress=False,normalize=False,spanishfy=False,possessives=False,possessives_restore_vowel=False,batch_id="",batch_comment="",debug_g2s=False):
-    reload(cf)
-    reload(g2s)
-    reload(ncf)
-    reload(normalizer)
-    reload(sti)
-    reload(ut)
+    
     
     log_prod = True
     log_level = logging.ERROR if log_prod else logging.DEBUG
