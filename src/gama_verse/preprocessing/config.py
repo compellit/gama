@@ -6,7 +6,7 @@ from pathlib import Path
 
 APOS = r"['‘’]"
 
-#IO
+# IO
 
 config_dir = Path(__file__).resolve().parent
 data_dir = config_dir / "data"
@@ -15,7 +15,7 @@ log_dir = config_dir / "logs"
 text_level_replacements = data_dir / "replacements_text.tsv"
 syllable_replacements = data_dir / "syllabification_postprocessing.tsv"
 syllable_replacements_for_g2s = data_dir / "syllabification-exceptions.lst"
-words_with_hyphen_to_keep = data_dir / "hyphens_to_keep.txt" # unused
+words_with_hyphen_to_keep = data_dir / "hyphens_to_keep.txt"  # unused
 
 
 log_fn_template = "log_{batch_id}.txt"

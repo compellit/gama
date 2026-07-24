@@ -2,10 +2,10 @@
 Collect tokens with apostrophes from a file.
 """
 
-from collections import Counter
 import re
-from pathlib import Path
 import sys
+from collections import Counter
+from pathlib import Path
 
 
 def collect_tokens_with_apostrophes(input_file: Path, output_file: Path):
@@ -18,9 +18,10 @@ def collect_tokens_with_apostrophes(input_file: Path, output_file: Path):
     """
     apostrophe_re = re.compile(r"\b\w*['‘’]\w*\b|\b\w*['‘’]\W", re.UNICODE)
 
-    with input_file.open("r", encoding="utf8") as infile,\
-            output_file.open("w", encoding="utf8") as outfile:
-        outfile.write(f"token\tfreq\n")
+    with input_file.open("r", encoding="utf8") as infile, output_file.open(
+        "w", encoding="utf8"
+    ) as outfile:
+        outfile.write("token\tfreq\n")
         all_counts = Counter()
         for line in infile:
             tokens = apostrophe_re.findall(line)

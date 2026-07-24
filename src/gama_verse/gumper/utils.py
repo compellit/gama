@@ -1,5 +1,6 @@
-from collections import OrderedDict
 import re
+from collections import OrderedDict
+
 # imports work this way when importing :func:`gumper_client_web.main` from :mod:`gama.views`
 from gumper import config as cf
 
@@ -29,7 +30,7 @@ def load_w_replacements(config):
             if line.startswith("#"):
                 continue
             key, value = line.strip().split("\t")
-            replacements[re.compile(fr"\b{key}\b", re.I)] = value
+            replacements[re.compile(rf"\b{key}\b", re.I)] = value
     return replacements
 
 
@@ -43,7 +44,7 @@ def load_t_replacements(config):
             if line.startswith("#"):
                 continue
             key, value = line.strip().split("\t")
-            replacements[re.compile(fr"{key}", re.I)] = value
+            replacements[re.compile(rf"{key}", re.I)] = value
     return replacements
 
 
@@ -56,21 +57,26 @@ def write_output_file(poem_lines, outinfo, poem_id):
     for outer_idx, info_list in enumerate(outinfo):
         for idx, info in enumerate(info_list):
             postpro_text = info[1]
-            keeps = [poem_lines[outer_idx][idx], postpro_text,  # orig lines + my own postpro
-                     info[2],                                   # nbSyll, met, met no antirhythmic
-                     " ".join([str(x) for x in info[3]]),
-                     " ".join([str(x) for x in info[4]]),
-                     f"{100*info[-1]:.2f}",                     # match ratio with pattern
-                     info[-2]]                                  # meter name
+            keeps = [
+                poem_lines[outer_idx][idx],
+                postpro_text,  # orig lines + my own postpro
+                info[2],  # nbSyll, met, met no antirhythmic
+                " ".join([str(x) for x in info[3]]),
+                " ".join([str(x) for x in info[4]]),
+                f"{100*info[-1]:.2f}",  # match ratio with pattern
+                info[-2],
+            ]  # meter name
             out_lines.append(keeps)
     ouname = cf.oufi.stem + f"_{str.zfill(poem_id, 3)}" + cf.oufi.suffix
     with open(cf.oufi.with_name(ouname), "w", encoding="utf-8") as oufh:
         for line in out_lines:
             oufh.write("\t".join([str(x) for x in line]) + "\n")
+
+
 def write_output_file_generic(poem_lines, outinfo, infn) -> None:
     """
     Writes the output to a file.
-    
+
     Args:
         poem_lines (list of list of str): List of poems, each poem is a list of its lines.
         outinfo (list of list): Jumper output format (list of lists).
@@ -83,17 +89,22 @@ def write_output_file_generic(poem_lines, outinfo, infn) -> None:
     for outer_idx, info_list in enumerate(outinfo):
         for idx, info in enumerate(info_list):
             postpro_text = info[1]
-            keeps = [poem_lines[outer_idx][idx], postpro_text,  # orig lines + my own postpro
-                     info[2],                                   # nbSyll, met, met no antirhythmic
-                     " ".join([str(x) for x in info[3]]),
-                     " ".join([str(x) for x in info[4]]),
-                     f"{100*info[-1]:.2f}",                     # match ratio with pattern
-                     info[-2]]                                  # meter name
+            keeps = [
+                poem_lines[outer_idx][idx],
+                postpro_text,  # orig lines + my own postpro
+                info[2],  # nbSyll, met, met no antirhythmic
+                " ".join([str(x) for x in info[3]]),
+                " ".join([str(x) for x in info[4]]),
+                f"{100*info[-1]:.2f}",  # match ratio with pattern
+                info[-2],
+            ]  # meter name
             out_lines.append(keeps)
     ouname = cf.oufi.stem + f"_{Path(infn).name}" + cf.oufi.suffix
     with open(cf.oufi.with_name(ouname), "w", encoding="utf-8") as oufh:
         for line in out_lines:
             oufh.write("\t".join([str(x) for x in line]) + "\n")
+
+
 def read_gold_stress_patterns(gold_location):
     """
     Reads the gold stress patterns from a file.

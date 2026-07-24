@@ -18,20 +18,14 @@ if __name__ == "__main__":
     syllables = g2s.silabeo(text)
     print(f"Syllables in '{text}': {syllables}")
 
-    if True:# Example usage with a list of words
+    if True:  # Example usage with a list of words
         # Example usage with a file
         input_file = Path("texts") / "examples-for-syll.txt"
-        #output_file = Path("output.txt")
 
         with input_file.open("r", encoding="utf8") as f:
             for line in f:
                 text = line.strip()
-                # if text == "cambiou":
-                #     breakpoint()
                 syllables = g2s.silabeo(text)
                 print(f"'{text}' -> {syllables}")
 
-        # syllables = g2s.grapheme_to_syllable(text)
         #
-        # with output_file.open("w") as f:
-        #     f.write("\n".join(syllables))

@@ -1,11 +1,9 @@
-from . import edcosts
-from . import editor
 import gzip
+import sys
 from importlib import reload
 
+from . import edcosts, editor
 from . import normconfig as nc
-import sys
-
 
 if __name__ == "__main__":
     for modu in edcosts, editor, nc:
@@ -26,13 +24,10 @@ if __name__ == "__main__":
     if "ivs" not in dir(sys.modules["__main__"]):
         with gzip.open(nc.IVDICO, "rt", encoding="utf8") as f:
             ivs = set(line.strip() for line in f if line.strip())
-    
-    # create EdManager    
+
+    # create EdManager
     edimgr = editor.EdManager(lev_score_mat_hash, ivs)
     edimgr.prep_alphabet()
-    
-    # get candidates    
+
+    # get candidates
     cands = edimgr.generate_levdist_candidates(oov)
-    #cands_and_dists = 
-    
-    
