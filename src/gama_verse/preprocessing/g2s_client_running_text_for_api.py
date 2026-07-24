@@ -1,3 +1,4 @@
+#We import modules.
 import argparse
 from collections import OrderedDict
 import copy
@@ -11,6 +12,7 @@ import time
 import stanza
 from stanza import DownloadMethod
 
+#We import custom scripts.
 from . import config as cf
 from .data import stress_info as sti
 from . import grapheme2syllable as g2s
@@ -19,6 +21,7 @@ from .normalization import normalizer
 from .normalization import normconfig as ncf
 
 
+#Regular expressions.
 PUNCT_TO_REMOVE = ".,;?!¿¡:«»()”“„"
 # last character is 'box drawings light horizontal' U+2500
 PUNCT_TO_SPACE = "—─"
@@ -499,7 +502,11 @@ def apply_syllabification(
     return out_lines, out_lines_running_text
 
 
+
 def scansion_prepro_main(input_file,nglm,nlp,nmlzr,nmlzr_es,preprocess=False,stress_marks="acute",destress=False,normalize=False,spanishfy=False,possessives=False,possessives_restore_vowel=False,batch_id="",batch_comment="",debug_g2s=False):
+    """
+    The main method. It preprocess text for the scansion analysis.
+    """
     
     
     log_prod = True
@@ -649,6 +656,7 @@ def scansion_prepro_main(input_file,nglm,nlp,nmlzr,nmlzr_es,preprocess=False,str
                 outf.write(" ".join([tu[syll_index_to_output] for tu in line]) + "\n")
     #      Running text: Forgetting about "des" infix cos for running text it's the same as "pp_out"
     if destress and preprocess and normalize:
+        '''
         infix_pp_destressed = "_pp_out_norm"
         if spanishfy:
             infix_pp_destressed += "_spa"
@@ -659,6 +667,9 @@ def scansion_prepro_main(input_file,nglm,nlp,nmlzr,nmlzr_es,preprocess=False,str
                 #outf.write(" ".join(line) + "\n")
                 outf.write(ut.detokenize(line) + "\n")
                 outstr+=(ut.detokenize(line) + "\n")
+        '''
+        for line in out_lines_running_text_destressed:
+            outstr+=(ut.detokenize(line) + "\n")
     print("- End: ", time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
     total_min, total_secs = divmod(time.time() - start_time, 60)
     #print(f"- Duration:  {total_min} m {total_secs:.2f} s")
