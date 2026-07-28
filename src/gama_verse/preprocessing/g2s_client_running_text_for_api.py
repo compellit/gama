@@ -5,8 +5,6 @@ import logging
 import re
 import sys
 import time
-from collections import OrderedDict
-from importlib import reload
 from pathlib import Path
 
 import stanza
@@ -17,8 +15,6 @@ from . import config as cf
 from . import grapheme2syllable as g2s
 from . import utils as ut
 from .data import stress_info as sti
-from .normalization import normalizer
-from .normalization import normconfig as ncf
 
 # Regular expressions.
 PUNCT_TO_REMOVE = ".,;?!¿¡:«»()”“„"
