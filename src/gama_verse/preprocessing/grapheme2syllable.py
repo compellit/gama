@@ -312,7 +312,7 @@ def _resyllabify_close_sequence(sl: list) -> list:
 
 def _resyllabify_homogeneous_diphthong_(sl: list) -> list:
     """
-    Resyllabifies  closed vowels the second of which bears a stress mark
+    Resyllabifies closed vowels the second of which bears a stress mark
     (e.g. Galician "muíño" goes to "mu-í-ño")
 
     Args:
