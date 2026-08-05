@@ -814,93 +814,51 @@ def scansion_prepro_main(
     out_dir_id = f"out{out_batch_id}"
     if not Path(input_file.parent / out_dir_id).exists():
         Path(input_file.parent / out_dir_id).mkdir(parents=True)
+
+    # We initialize the output strings.
+    # For outputs that don't overlap.
     outstr = ""
+    # For the syllabification output that's always generated.
+    outstr_syll=""
+    # For the preprocessing output without normalization.
+    outstr_pre_unorm=""
+    # For the syllabification with destressing without normalization output.
+    outstr_syll_des_unorm=""
+    # For the syllabification with destressing and normalization output.
+    outstr_syll_des_norm=""
+
     #   Syllabification
-    infix_pp_syll = "_pp_syll_out" if preprocess else "_syll_out"
-    infix_pp_syll += out_batch_id
-    output_file_syll = (
-        input_file.parent
-        / out_dir_id
-        / Path(input_file.stem + infix_pp_syll + input_file.suffix)
-    )
-    with output_file_syll.open(mode="w", encoding="utf8") as outf:
-        for line in out_lines:
-            syll_index_to_output = 0 if stress_marks == "allupper" else 1
-            outf.write(" ".join([tu[syll_index_to_output] for tu in line]) + "\n")
+    for line in out_lines:
+        syll_index_to_output = 0 if stress_marks == "allupper" else 1
+        outstr_syll += " ".join([tu[syll_index_to_output] for tu in line]) + "\n"
 
     #   Running text (always preprocessed)
     if preprocess and not normalize:
-        infix_pp_text = "_pp_out"
-        infix_pp_text += out_batch_id
-        output_file_pp = (
-            input_file.parent
-            / out_dir_id
-            / Path(input_file.stem + infix_pp_text + input_file.suffix)
-        )
-        with output_file_pp.open(mode="w", encoding="utf8") as outf:
-            for line in out_lines_running_text:
-                outf.write(ut.detokenize(line) + "\n")
+        for line in out_lines_running_text:
+            outstr_pre_unorm += ut.detokenize(line) + "\n"
 
     #   Destressed syllabification
     if destress and not normalize:
-        infix_destressed = "_pp_syll_out_des" if preprocess else "_syll_out_des"
-        infix_destressed += out_batch_id
-        output_file_syll_destressed = (
-            input_file.parent
-            / out_dir_id
-            / Path(input_file.stem + infix_destressed + input_file.suffix)
-        )
-        with output_file_syll_destressed.open(mode="w", encoding="utf8") as outf:
-            for line in out_lines_destressed:
-                syll_index_to_output = 0 if stress_marks == "allupper" else 1
-                outf.write(" ".join([tu[syll_index_to_output] for tu in line]) + "\n")
+        for line in out_lines_destressed:
+            syll_index_to_output = 0 if stress_marks == "allupper" else 1
+            outstr_syll_des_unorm += " ".join([tu[syll_index_to_output] for tu in line]) + "\n"
 
     #   Destressed running text
     if destress and preprocess and not normalize:
-        infix_pp_destressed = "_pp_out_des"
-        infix_pp_destressed += out_batch_id
-        output_file_pp_destressed = (
-            input_file.parent
-            / out_dir_id
-            / Path(input_file.stem + infix_pp_destressed + input_file.suffix)
-        )
-        with output_file_pp_destressed.open(mode="w", encoding="utf8") as outf:
-            for line in out_lines_running_text_destressed:
-                outf.write(ut.detokenize(line) + "\n")
+        for line in out_lines_running_text_destressed:
+            outstr += ut.detokenize(line) + "\n"
 
     #   With normalization
     #      Syllabification
     #         This normalized but not destressed output is only for debugging (you need destressed output for Gumper)
     if normalize and not destress:
-        infix_syll_norm = "_pp_syll_out_norm" if preprocess else "_syll_out_norm"
-        if spanishfy:
-            infix_syll_norm += "_spa"
-        infix_syll_norm += out_batch_id
-        output_file_syll_destressed = (
-            input_file.parent
-            / out_dir_id
-            / Path(input_file.stem + infix_syll_norm + input_file.suffix)
-        )
-        with output_file_syll_destressed.open(mode="w", encoding="utf8") as outf:
-            for line in out_lines:
-                syll_index_to_output = 0 if stress_marks == "allupper" else 1
-                outf.write(" ".join([tu[syll_index_to_output] for tu in line]) + "\n")
+        for line in out_lines:
+            syll_index_to_output = 0 if stress_marks == "allupper" else 1
+            outstr += " ".join([tu[syll_index_to_output] for tu in line]) + "\n"
     if destress and normalize:
-        infix_destressed = (
-            "_pp_syll_out_des_norm" if preprocess else "_syll_out_des_norm"
-        )
-        if spanishfy:
-            infix_destressed += "_spa"
-        infix_destressed += out_batch_id
-        output_file_syll_destressed = (
-            input_file.parent
-            / out_dir_id
-            / Path(input_file.stem + infix_destressed + input_file.suffix)
-        )
-        with output_file_syll_destressed.open(mode="w", encoding="utf8") as outf:
-            for line in out_lines_destressed:
-                syll_index_to_output = 0 if stress_marks == "allupper" else 1
-                outf.write(" ".join([tu[syll_index_to_output] for tu in line]) + "\n")
+        for line in out_lines_destressed:
+            syll_index_to_output = 0 if stress_marks == "allupper" else 1
+            outstr_syll_des_norm += (" ".join([tu[syll_index_to_output] for tu in line]) + "\n")
     #      Running text: Forgetting about "des" infix cos for running text it's the same as "pp_out"
     if destress and preprocess and normalize:
         for line in out_lines_running_text_destressed:
@@ -915,4 +873,4 @@ def scansion_prepro_main(
             if batch_info_path.exists() and batch_info_path.stat().st_size == 0:
                 batch_info.write("Batch ID\tComment\n")
             batch_info.write(f"{batch_id}\t{batch_comment}\n")
-    return outstr
+    return outstr, outstr_syll, outstr_pre_unorm, outstr_syll_des_unorm, outstr_syll_des_norm
