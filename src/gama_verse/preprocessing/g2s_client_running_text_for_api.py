@@ -702,7 +702,8 @@ def apply_syllabification(
 
 
 def scansion_prepro_main(
-    input_file,
+    input_str,
+    out_dir,
     nglm,
     nlp,
     nmlzr,
@@ -751,8 +752,7 @@ def scansion_prepro_main(
     start_time = time.time()
     print("- Start: ", time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
 
-    with open(input_file, "r", encoding="utf8") as f:
-        lines_to_syllabify = f.readlines()
+    lines_to_syllabify = input_str.split("\n")
 
     # Syllabification
     out_lines, out_lines_running_text = apply_syllabification(
@@ -812,20 +812,20 @@ def scansion_prepro_main(
     # Outputs
     out_batch_id = f"_{str.zfill(batch_id, 3)}" if batch_id else ""
     out_dir_id = f"out{out_batch_id}"
-    if not Path(input_file.parent / out_dir_id).exists():
-        Path(input_file.parent / out_dir_id).mkdir(parents=True)
+    if not Path(out_dir / out_dir_id).exists():
+        Path(out_dir / out_dir_id).mkdir(parents=True)
 
     # We initialize the output strings.
     # For outputs that don't overlap.
     outstr = ""
     # For the syllabification output that's always generated.
-    outstr_syll=""
+    outstr_syll = ""
     # For the preprocessing output without normalization.
-    outstr_pre_unorm=""
+    outstr_pre_unorm = ""
     # For the syllabification with destressing without normalization output.
-    outstr_syll_des_unorm=""
+    outstr_syll_des_unorm = ""
     # For the syllabification with destressing and normalization output.
-    outstr_syll_des_norm=""
+    outstr_syll_des_norm = ""
 
     #   Syllabification
     for line in out_lines:
@@ -868,7 +868,7 @@ def scansion_prepro_main(
     logger.info(f"- Duration:  {total_min}m {total_secs:.2f}s")
 
     if batch_comment:
-        batch_info_path = Path(input_file.parent) / cf.batch_cumulog
+        batch_info_path = out_dir / cf.batch_cumulog
         with open(batch_info_path, mode="a") as batch_info:
             if batch_info_path.exists() and batch_info_path.stat().st_size == 0:
                 batch_info.write("Batch ID\tComment\n")

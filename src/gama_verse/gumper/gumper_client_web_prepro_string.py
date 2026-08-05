@@ -40,16 +40,15 @@ def _identify_extrarhythmic_positions(
     return extra_sylls
 
 
-def main(cf, origfile, poem_text):
+def main(cf, origstr, poem_text):
     reps_w = ut.load_w_replacements(cf)
     reps_t = ut.load_t_replacements(cf)
 
     all_scansion_out = {"desktop": [], "mobile": []}
     results_data = []
 
-    with open(origfile, encoding="utf8") as f:
-        # lines are obtained instead of just reading the text for compatibility with old code below
-        orig_lines = [line.strip() for line in f if line.strip() != ""]
+    # lines are obtained instead of just using the text for compatibility with old code below
+    orig_lines = [i.strip() for i in origstr.split("\n") if i.strip() != ""]
 
     # We clean up the text and apply the scansion analysis to it.
     poem_text = ut.cleanup_text(poem_text, reps_t)
