@@ -22,7 +22,7 @@ d’antr’ó	de antre o
 # The following default ones come from Gumper
 # In the end won't use cos for training corpus, the syllable gets destressed
 # c/o stress_info.atonas_gl. And "modernizing" this needs to be context-sensitive
-# e.g. ó -> ao mostly, but á maybe a or á  
+# e.g. ó -> ao mostly, but á maybe a or á
 #\bâs\b	ás
 #\bôs\b	os
 #\bâ\b	á

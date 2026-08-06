@@ -8,7 +8,7 @@ Added fixes: Resyllabification for some issues found when processing.
 Copyright (C) 2007  Rafael C. Carrasco for the initial Java implementation,
 see https://www.dlsi.ua.es/%7Ecarrasco/progs/Hyphenator.java
 This program is free software; you can redistribute it and/or
-modify it under the terms of   the GNU General Public License
+modify it under the terms of the GNU General Public License
 as published by the Free Software Foundation; either version 2
 of the License, or (at your option) any later version.
 Adapted from José A. Mañas in Communications of the ACM 30(7), 1987.
