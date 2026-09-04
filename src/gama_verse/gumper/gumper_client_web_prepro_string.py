@@ -94,6 +94,7 @@ def main(cf, origstr, poem_text):
                 "metrical_syllables": result[2],
                 "stressed_syllables": " ".join(map(str, result[3])),
                 "no_extra_rhythmic": " ".join(map(str, result[4])),
+                "line_type": result[5],
             }
         )
     return esc, all_scansion_out, results_data
