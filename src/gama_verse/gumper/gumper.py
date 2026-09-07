@@ -613,6 +613,7 @@ def quitar_puntuacion(texto):
         "-",
         "/",
         "/",
+        "…"
     ]
     quitar += ["'", "‘", "’", "´", "`"]  # added pr
     for q in quitar:
