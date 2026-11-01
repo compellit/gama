@@ -1,6 +1,10 @@
 """Jumper by Guillermo Marco, trying our modifications for Galician"""
 
+import csv
 import math
+import os
+import re
+from pathlib import Path
 
 nombre_verso = [
     "",
@@ -582,11 +586,38 @@ puntos = [
     "//",
 ]
 
+# Tokens read aloud as words, so their syllables count ("H" is "hache").
+SPELL_OUT_REPLACEMENTS = {"H": "hache", "XII": "doce", "XIII": "trece"}
+# Corpus runs can log each replacement by setting this variable to a TSV path;
+# nothing is logged otherwise (the web app leaves it unset).
+SPELL_OUT_REPLACEMENTS_LOG = os.environ.get("GUMPER_REPLACEMENTS_LOG")
+
 FACTOR_AGUDA, FACTOR_LLANA, FACTOR_ESDRUJULA = 1, 0, -1
 
 """
 MÓDULO DE ANALISIS DE PALABRA: COMPUTO DE SILABAS Y ACENTOS DE PALABRAS
 """
+
+
+def log_reemplazo_lectura(contexto, line_number, old, new, verse_before, verse_after):
+    log_path = Path(SPELL_OUT_REPLACEMENTS_LOG)
+    log_path.parent.mkdir(parents=True, exist_ok=True)
+    write_header = not log_path.exists() or log_path.stat().st_size == 0
+    with log_path.open("a", newline="", encoding="utf-8") as f:
+        writer = csv.writer(f, delimiter="\t")
+        if write_header:
+            writer.writerow(["context", "line_number", "old", "new", "verse_before", "verse_after"])
+        writer.writerow([contexto, line_number, old, new, verse_before, verse_after])
+
+
+def aplicar_reemplazos_lectura(texto, contexto="", line_number="", log_replacements=False):
+    original_texto = texto
+    for old, new in SPELL_OUT_REPLACEMENTS.items():
+        replaced_texto, count = re.subn(rf"(?<!\w){re.escape(old)}(?!\w)", new, texto)
+        if count and log_replacements and SPELL_OUT_REPLACEMENTS_LOG:
+            log_reemplazo_lectura(contexto, line_number, old, new, original_texto, replaced_texto)
+        texto = replaced_texto
+    return texto
 
 
 def quitar_puntuacion(texto):
@@ -647,12 +678,15 @@ def normalizar_qu_gu(palabra):
 
 
 def empieza_por_vocal(palabra):
-    return (palabra[0] in vocales_y) or (palabra[0] == "h" and palabra[1] in vocales_y)
+    # A lone "h" has no next letter.
+    return (palabra[0] in vocales_y) or (
+        len(palabra) > 1 and palabra[0] == "h" and palabra[1] in vocales_y
+    )
 
 
 def termina_por_vocal(palabra):
     return (palabra[-1] in vocales_y) or (
-        palabra[-1] == "h" and palabra[-2] in vocales_y
+        len(palabra) > 1 and palabra[-1] == "h" and palabra[-2] in vocales_y
     )
 
 
@@ -1087,7 +1121,9 @@ def en_hemistiquio(num_silabas, factor, arte):
         return num_silabas + factor == math.ceil(hemistiquio)
 
 
-def verso_silabas_acentos_tipo(verso, arte=0, detectar_amb=0):
+def verso_silabas_acentos_tipo(
+    verso, arte=0, detectar_amb=0, contexto="", line_number="", log_replacements=False
+):
     """Toma un verso y devuelve su análisis métrico
 
     Args:
@@ -1102,6 +1138,7 @@ def verso_silabas_acentos_tipo(verso, arte=0, detectar_amb=0):
     """
 
     num_silabas = 0
+    verso = aplicar_reemplazos_lectura(verso, contexto, line_number, log_replacements)
     verso_op = quitar_puntuacion(verso.lower()).strip().split(" ")
     acentos = []
     versos_amb = []
@@ -1270,13 +1307,19 @@ def escandir_lista_versos(versos, contexto=14):
     """
     x = []
     nuevo = []
+    poem_context = " // ".join([v.strip().replace("\n", "") for v in versos if v.strip()][:2])
     # computo con modulo de ambiguedades desactivado
-    for verso_a in versos:
+    for line_number, verso_a in enumerate(versos, start=1):
         v = verso_a.strip().replace("\n", "")
         if not v:
             continue
         v_final, silabas_v, acentos_v, clasificacion_v = verso_silabas_acentos_tipo(
-            verso_a, 0, 0
+            verso_a,
+            0,
+            0,
+            contexto=poem_context,
+            line_number=line_number,
+            log_replacements=True,
         )
         tipo_v, acentos_ideales_v, ratio_v = clasificacion_v
         x.append([v, v_final, silabas_v, acentos_v, acentos_ideales_v, tipo_v, ratio_v])

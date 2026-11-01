@@ -585,9 +585,8 @@ def _merge_ao_contraction(sl: list) -> list:
     sl_copy = copy(sl)
     for idx, sy in enumerate(sl):
         try:
-            if sy == "a" and sl[idx + 1] == "o":
+            if sy == "a" and sl[idx + 1] == "o" and len(sl) == 2:
                 sl_copy[idx] = "ao"
-                assert len(sl) == 2
                 del sl_copy[idx + 1]
         except IndexError:
             pass

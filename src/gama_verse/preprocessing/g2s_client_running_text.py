@@ -538,8 +538,11 @@ def apply_syllabification(
 
             # form of address (so far found 'dona') ===============================================
             if syllables[1].lower() in ut.ambiguous_address:
-                # Stress if preceding ([-1][-2]) is a disambiguator
-                field_to_check = -2 if type(out_line[-1][-2]) is str else -3
+                # Stress if preceding ([-1][-2]) is a disambiguator. A line can
+                # start with the form of address ("Doña"): nothing precedes it.
+                field_to_check = (
+                    (-2 if type(out_line[-1][-2]) is str else -3) if out_line else None
+                )
                 if (
                     len(out_line) > 0
                     and out_line[-1][field_to_check].lower()
