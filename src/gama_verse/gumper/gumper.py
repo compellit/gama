@@ -496,6 +496,15 @@ atonas_gl = [
     "para",
     "pra",
     "prá",
+    # "para" + article. "pro"/"pró" is also the conjunction (= "pero"), and a
+    # stressed noun after a few words ("en pró de", "no meu pro"): see
+    # is_unstressed().
+    "pras",
+    "prás",
+    "pro",
+    "pró",
+    "pros",
+    "prós",
     "por",
     "##segundo",
     "sen",
@@ -560,6 +569,23 @@ atonas_gl = [
 ]
 
 atonas = atonas_gl
+
+# "pro"/"pró" is unstressed as "para o" or as the conjunction, but a stressed
+# noun ("benefit") after these words: "en pró de", "de moito pró", "homes de
+# pro", "no meu pro". Checked on the previous word of the verse.
+PRO_FORMS = {"pro", "pró"}
+PRO_NOUN_PRECEDERS = {"en", "de", "moito", "tanto", "meu", "teu", "seu", "noso", "voso"}
+
+
+def is_unstressed(word, index, words):
+    """Tell whether ``words[index]`` (``word``) is an unstressed word in its verse."""
+    if word not in atonas:
+        return False
+    if word in PRO_FORMS:
+        previous = [w for w in words[:index] if w]
+        if previous and previous[-1] in PRO_NOUN_PRECEDERS:
+            return False
+    return True
 
 puntos = [
     ":",
@@ -1167,7 +1193,7 @@ def verso_silabas_acentos_tipo(
                 acentos.append(num_silabas - (silabas_mente - acento_mente))
             else:
                 # cómputo del acento para el resto de palabras (un acento)
-                if palabra not in atonas or i == len(verso_op) - 1:
+                if not is_unstressed(palabra, i, verso_op) or i == len(verso_op) - 1:
                     acento_nuevo = num_silabas - (silabas - acento)
                     if acentos:
                         if acentos[-1] != acento_nuevo:
@@ -1212,7 +1238,7 @@ def verso_silabas_acentos_tipo(
             # hemistiquios
             if (
                 arte > 0
-                and palabra not in atonas
+                and not is_unstressed(palabra, i, verso_op)
                 and en_hemistiquio(num_silabas, factor, arte)
             ):
                 num_silabas += factor
