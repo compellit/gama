@@ -359,9 +359,12 @@ def apply_syllabification(
                 syllables[1].lower() in ut.ambiguous_possessives
             ):  # ("´tú-a", "´tú-as", "´sú-a", "´sú-as"):
                 # See if preceding ([-1][-2]) is an article, destress otherwise
+                # the preceding word's plain form is at -3 when it was
+                # disambiguated (a {"disambiguated": True} dict appended)
+                field_to_check = -2 if len(out_line) > 0 and type(out_line[-1][-2]) is str else -3
                 if (
                     len(out_line) > 0
-                    and out_line[-1][-2].lower() not in ut.possessive_disambiguators
+                    and out_line[-1][field_to_check].lower() not in ut.possessive_disambiguators
                 ):
                     syllables[1] = syllables[1].replace("´", "")
                     # also destress the segment? problem if modifies preceding noun
@@ -522,7 +525,8 @@ def apply_syllabification(
 
             # "cabo" unstressed if "cabo de" but not "a?o cabo de" (accents for 19th stuff) ==========
             if syllables[1].lower() == "´ca-bo":
-                if len(out_line) > 0 and out_line[-1][-2].lower() not in (
+                field_to_check = -2 if len(out_line) > 0 and type(out_line[-1][-2]) is str else -3
+                if len(out_line) > 0 and out_line[-1][field_to_check].lower() not in (
                     "o",
                     "ó",
                     "ô",
