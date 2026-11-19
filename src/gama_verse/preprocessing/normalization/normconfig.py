@@ -9,7 +9,7 @@ from pathlib import Path
 # They are read from the folder given by the GAMA_VERSE_DATA environment variable,
 # or from ~/.cache/gama-verse by default (see gama-verse-download).
 DATA_DIR = Path(os.environ.get("GAMA_VERSE_DATA", Path.home() / ".cache" / "gama-verse"))
-IVDICO = DATA_DIR / "new_vocab_less_clitics.pkl"
+IVDICO = DATA_DIR / "gl-vocab.pkl"
 IVDICO_ES = DATA_DIR / "aspell-es-expanded.txt.pkl"
 LMPATH = DATA_DIR / "nos-127.klm.bin"
 LANGUAGES = ("gl", "es")
