@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gama-verse"
+version = "0.1.0"
+description = "Metrical scansion of Galician poetry (GAMA, Galician Metrical Analyzer)"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "kenlm==0.3.0",
+    "stanza>=1.6",
+]
+
+[project.scripts]
+gama-verse = "gama_verse.cli:main"
+gama-verse-download = "gama_verse.download:main"
+
+[tool.setuptools.package-data]
+gama_verse = ["preprocessing/data/*", "gumper/data/*"]
