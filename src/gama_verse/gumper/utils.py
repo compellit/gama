@@ -2,7 +2,7 @@ import re
 from collections import OrderedDict
 
 # imports work this way when importing :func:`gumper_client_web.main` from :mod:`gama.views`
-from gumper import config as cf
+from . import config as cf
 
 
 def cleanup_text(text, replacements=None):

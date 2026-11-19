@@ -2,12 +2,12 @@ import argparse
 from importlib import reload
 from pathlib import Path
 
-import gumper
-from gumper import config as cf
-from gumper import utils as ut
+from . import gumper
+from . import config as cf
+from . import utils as ut
 
 # imports work this way when importing :func:`main` from :mod:`gama.views`
-from gumper.gumper import escandir_texto
+from .gumper import escandir_texto
 
 DBG = False
 
