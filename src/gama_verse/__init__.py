@@ -77,8 +77,9 @@ def scan(text: str) -> list[dict]:
     """Preprocess a poem and scan it. Returns one dict per line.
 
     Keys: ``line``, ``original_text``, ``preprocessing``, ``metrical_syllables``,
-    ``stressed_syllables``, ``regular_pattern`` (stressed syllables without
-    extrarhythmic stresses) and ``line_type``.
+    ``stressed_syllables``, ``regular_pattern`` (stresses of the closest regular
+    pattern, i.e. the line type's pattern; ``-`` for lines over 11 syllables)
+    and ``line_type``.
     """
     from .gumper import client
     from .gumper import config as gcf

@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=61"]
+requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -7,6 +7,13 @@ name = "gama-verse"
 version = "0.1.0"
 description = "Metrical scansion of Galician poetry (GAMA, Galician Metrical Analyzer)"
 readme = "README.md"
+license = "GPL-3.0-only"
+license-files = ["LICENSE"]
+authors = [
+    { name = "Pablo Ruiz Fabo" },
+    { name = "Anxo Alonso Pérez" },
+    { name = "Xabier Suárez Cordero" },
+]
 requires-python = ">=3.10"
 dependencies = [
     "kenlm==0.3.0",
