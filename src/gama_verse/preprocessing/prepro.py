@@ -733,31 +733,13 @@ def scansion_prepro_main(
     log_prod = True
     log_level = logging.ERROR if log_prod else logging.DEBUG
 
-    # prepare logging
-    for h in logging.root.handlers[:]:
-        logging.root.removeHandler(h)
+    # Logging: only the levels are set here. Handlers (where messages go) are
+    # left to the program using the package.
     logger = logging.getLogger("main")
     logging.getLogger("stanza").setLevel(logging.ERROR)
-    logger.handlers.clear()
     logger.setLevel(log_level)
-    lfh = logging.FileHandler(
-        Path(cf.log_dir)
-        / cf.log_fn_template.format(batch_id=str.zfill(batch_id, 3), mode="w")
-    )
-    lch = logging.StreamHandler(sys.stdout)
-    lfh.setLevel(log_level)
-    lch.setLevel(log_level)
-    log_format_file = logging.Formatter(
-        "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-    )
-    log_format_console = logging.Formatter("%(message)s")
-    lfh.setFormatter(log_format_file)
-    lch.setFormatter(log_format_console)
-    logger.addHandler(lfh)
-    logger.addHandler(lch)
 
     start_time = time.time()
-    print("- Start: ", time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
 
     lines_to_syllabify = input_str.split("\n")
 
@@ -817,11 +799,6 @@ def scansion_prepro_main(
                     )
 
     # Outputs
-    out_batch_id = f"_{str.zfill(batch_id, 3)}" if batch_id else ""
-    out_dir_id = f"out{out_batch_id}"
-    if not Path(out_dir / out_dir_id).exists():
-        Path(out_dir / out_dir_id).mkdir(parents=True)
-
     # We initialize the output strings.
     # For outputs that don't overlap.
     outstr = ""
@@ -870,7 +847,6 @@ def scansion_prepro_main(
     if destress and preprocess and normalize:
         for line in out_lines_running_text_destressed:
             outstr += ut.detokenize(line) + "\n"
-    print("- End: ", time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
     total_min, total_secs = divmod(time.time() - start_time, 60)
     logger.info(f"- Duration:  {total_min}m {total_secs:.2f}s")
 

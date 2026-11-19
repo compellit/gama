@@ -13,7 +13,7 @@ class KenLMManager:
     def __init__(self, bin_path=nc.LMPATH, fragment_mode=True):
         """Initialize KenLMManager with the path to the binary language model."""
         self.bin_path = bin_path
-        print("Loading KenLM model from:", bin_path)
+        klm_logger.info("Loading KenLM model from: %s", bin_path)
         self.model = kenlm.LanguageModel(str(self.bin_path))
         self.fragment_mode = fragment_mode
 

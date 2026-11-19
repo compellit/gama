@@ -20,8 +20,6 @@ words_with_hyphen_to_keep = data_dir / "hyphens_to_keep.txt"  # unused
 
 log_fn_template = "log_{batch_id}.txt"
 licenses_log_fn_template = "log_licenses_{batch_id}.txt"
-if not Path(log_dir).exists():
-    Path(log_dir).mkdir(parents=True)
 
 batch_cumulog = "batch_log.txt"
 batch_cumulog_licenses = "batch_log_licenses.txt"
