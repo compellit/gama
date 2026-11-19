@@ -93,7 +93,7 @@ def main(cf, origstr, poem_text):
                 "preprocessing": result[1],
                 "metrical_syllables": result[2],
                 "stressed_syllables": " ".join(map(str, result[3])),
-                "no_extra_rhythmic": " ".join(map(str, result[4])),
+                "regular_pattern": " ".join(map(str, result[4])),
                 "line_type": result[5],
             }
         )

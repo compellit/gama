@@ -19,7 +19,7 @@ COLUMNS = [
     "preprocessing",
     "metrical_syllables",
     "stressed_syllables",
-    "no_extra_rhythmic",
+    "regular_pattern",
     "line_type",
 ]
 
