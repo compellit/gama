@@ -1,14 +1,19 @@
-"""Command line interface: gama-verse [FILE] scans one poem and writes a TSV."""
+"""Command line interface: gama-verse [PATH ...] scans poems and writes a TSV.
+
+Each file is one poem. A directory stands for the .txt files in it.
+"""
 
 from __future__ import annotations
 
 import argparse
 import csv
 import sys
+from pathlib import Path
 
 from . import __version__, preprocess, scan
 
 COLUMNS = [
+    "file",
     "line",
     "original_text",
     "preprocessing",
@@ -19,15 +24,27 @@ COLUMNS = [
 ]
 
 
+def input_files(paths: list[str]) -> list[Path]:
+    """Return the files to process: directories are replaced by their .txt files."""
+    files = []
+    for path in map(Path, paths):
+        if path.is_dir():
+            files.extend(sorted(path.glob("*.txt")))
+        else:
+            files.append(path)
+    return files
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         prog="gama-verse",
         description=(
-            "Scan a Galician poem (one verse per line) and write the results as TSV "
-            "to standard output. Reads standard input if no file is given."
+            "Scan Galician poems (one verse per line, one poem per file) and write the "
+            "results as TSV to standard output. A directory stands for the .txt files "
+            "in it. Reads standard input if no path is given."
         ),
     )
-    parser.add_argument("file", nargs="?", help="text file with the poem")
+    parser.add_argument("paths", nargs="*", help="text files with one poem each, or directories")
     parser.add_argument(
         "--prepro-only",
         action="store_true",
@@ -36,19 +53,21 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--version", action="version", version=f"gama-verse {__version__}")
     args = parser.parse_args(argv)
 
-    if args.file:
-        with open(args.file, encoding="utf-8") as fh:
-            text = fh.read()
+    if args.paths:
+        poems = [(str(f), f.read_text(encoding="utf-8")) for f in input_files(args.paths)]
     else:
-        text = sys.stdin.read()
+        poems = [("-", sys.stdin.read())]
 
     if args.prepro_only:
-        sys.stdout.write(preprocess(text))
+        for _name, text in poems:
+            sys.stdout.write(preprocess(text))
         return 0
 
     writer = csv.DictWriter(sys.stdout, fieldnames=COLUMNS, delimiter="\t", lineterminator="\n")
     writer.writeheader()
-    writer.writerows(scan(text))
+    for name, text in poems:
+        for row in scan(text):
+            writer.writerow({"file": name, **row})
     return 0
 
 
