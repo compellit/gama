@@ -10,7 +10,6 @@ import urllib.request
 
 from .preprocessing.normalization import normconfig
 
-# TODO: Hugging Face repository not created yet.
 BASE_URL = "https://huggingface.co/compellit/gama-verse-data/resolve/main/"
 FILES = [normconfig.LMPATH.name, normconfig.IVDICO.name, normconfig.IVDICO_ES.name]
 
