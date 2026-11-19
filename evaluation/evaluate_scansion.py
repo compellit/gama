@@ -1,7 +1,7 @@
 """Evaluate gama-verse scansion against a gold standard.
 
 Usage:
-    python evaluation/evaluate_scansion.py GOLD [-o OUTPUT.tsv]
+    python evaluation/evaluate_scansion.py GOLD [--metadata METADATA] [-o OUTPUT.tsv]
 
 GOLD is a TSV or an .xlsx workbook (sheet "dataAll") with one row per line of
 verse and these columns:
@@ -14,6 +14,9 @@ verse and these columns:
   this column, the whole file is scanned as one poem.
 - ``metSylls`` (optional): gold metrical syllabification. If present, accuracy
   is also given for lines with each metrical license (synalepha, dieresis...).
+
+The optional ``workId`` and ``metSylls`` columns can also come from a separate
+METADATA file (TSV or .xlsx, same format), with the same lines in the same order.
 
 Two measures, as in Ruiz Fabo et al. (2026):
 
@@ -48,13 +51,22 @@ LICENSE_FEATURES = {
 }
 
 
-def read_gold(path: Path) -> pd.DataFrame:
+def read_table(path: Path) -> pd.DataFrame:
     if path.suffix == ".xlsx":
         df = pd.read_excel(path, sheet_name="dataAll", keep_default_na=False)
     else:
         df = pd.read_csv(path, sep="\t", quoting=3, keep_default_na=False)
-    if "text" not in df.columns:
-        df = df.rename(columns={"origText": "text"})
+    return df.rename(columns={"origText": "text"})
+
+
+def read_gold(path: Path, metadata_path: Path | None = None) -> pd.DataFrame:
+    df = read_table(path)
+    if metadata_path:
+        md = read_table(metadata_path)
+        assert len(md) == len(df), "gold and metadata have different numbers of lines"
+        for col in ("workId", "metSylls"):
+            if col in md.columns:
+                df[col] = md[col].values
     if "workId" not in df.columns:
         df["workId"] = "poem"
     return df
@@ -82,10 +94,11 @@ def scan_by_poem(gold: pd.DataFrame) -> pd.DataFrame:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     parser.add_argument("gold", type=Path, help="gold TSV or .xlsx (sheet dataAll)")
+    parser.add_argument("--metadata", type=Path, help="workId and metSylls columns, if not in GOLD")
     parser.add_argument("-o", "--output", type=Path, help="per-line results (TSV)")
     args = parser.parse_args()
 
-    gold = read_gold(args.gold)
+    gold = read_gold(args.gold, args.metadata)
     df = gold.join(scan_by_poem(gold))
     df["stressMatch"] = (df["predStressPattern"] == df["stressPattern"].astype(str).str.strip()).astype(int)
     df["meterMatch"] = (df["predMetSyll"] == df["nbrMetSyll"].astype(str).str.strip()).astype(int)
