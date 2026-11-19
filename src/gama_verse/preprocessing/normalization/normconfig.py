@@ -1,13 +1,17 @@
 """Normalization configuration file for Galician XIX c. texts"""
 
+import os
 from pathlib import Path
 
 # resources -------------------------------------
 
-config_dir = Path(__file__).parent
-IVDICO = (config_dir.parent / "data" / "new_vocab_less_clitics.pkl").resolve()
-IVDICO_ES = (config_dir.parent / "data" / "aspell-es-expanded.txt.pkl").resolve()
-LMPATH = (config_dir.parent / "data" / "nos-127.klm.bin").resolve()
+# The large files (language model and vocabularies) are not part of the package.
+# They are read from the folder given by the GAMA_VERSE_DATA environment variable,
+# or from ~/.cache/gama-verse by default (see gama-verse-download).
+DATA_DIR = Path(os.environ.get("GAMA_VERSE_DATA", Path.home() / ".cache" / "gama-verse"))
+IVDICO = DATA_DIR / "new_vocab_less_clitics.pkl"
+IVDICO_ES = DATA_DIR / "aspell-es-expanded.txt.pkl"
+LMPATH = DATA_DIR / "nos-127.klm.bin"
 LANGUAGES = ("gl", "es")
 
 
