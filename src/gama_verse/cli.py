@@ -48,7 +48,10 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--prepro-only",
         action="store_true",
-        help="only write the preprocessed text, without scansion",
+        help=(
+            "only write the preprocessed text, without scansion; with several files, "
+            "a line '--- <file> ---' comes before each one"
+        ),
     )
     parser.add_argument("--version", action="version", version=f"gama-verse {__version__}")
     args = parser.parse_args(argv)
@@ -59,8 +62,12 @@ def main(argv: list[str] | None = None) -> int:
         poems = [("-", sys.stdin.read())]
 
     if args.prepro_only:
-        for _name, text in poems:
-            sys.stdout.write(preprocess(text))
+        for name, text in poems:
+            # With several files, a line with the file name marks where each one starts
+            if len(poems) > 1:
+                sys.stdout.write(f"--- {name} ---\n")
+            out = preprocess(text)
+            sys.stdout.write(out if out.endswith("\n") else out + "\n")
         return 0
 
     writer = csv.DictWriter(sys.stdout, fieldnames=COLUMNS, delimiter="\t", lineterminator="\n")
