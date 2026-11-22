@@ -1,11 +1,13 @@
-# GAMA · Galician Metrical Analyzer
+# Gama
 
-Metrical scansion of Galician poetry. For each line of a poem, GAMA gives the number of metrical syllables, the stressed syllables and the line type (e.g. *endecasílabo melódico puro*).
+Galician Metrical Analyzer · 🦌
+
+Metrical scansion of Galician poetry. For each line of a poem, Gama gives the number of metrical syllables, the stressed syllables and the line type (e.g. *endecasílabo melódico puro*).
 
 Scansion has two steps:
 
-1. **Preprocessing**: spelling normalization (useful for texts that predate the current orthographic norm, using a KenLM language model and vocabularies) and other changes to prepare the text for scansion (e.g. identifying lexically unstressed words like most articles, using the stanza tagger for part-of-speech cues).
-2. **Scansion**: Gumper, our Galician adaptation of [Jumper](https://github.com/grmarco/jumper) (Marco Remón & Gonzalo 2021).
+1. **Preprocessing**: spelling normalization (useful for texts that predate the current orthographic norm, using a KenLM language model and vocabularies) and other changes to prepare the text for scansion (e.g. identifying lexically unstressed words like most articles, using the Stanza tagger for part-of-speech cues).
+2. **Scansion**: our Galician adaptation of [Jumper](https://github.com/grmarco/jumper) (Marco Remón & Gonzalo 2021).
 
 
 ## Installation
@@ -26,7 +28,7 @@ gama-verse-download
 
 They are saved to `~/.cache/gama-verse`. To use a different folder, set the `GAMA_VERSE_DATA` environment variable (for both the download and the analysis).
 
-The stanza Galician model is downloaded automatically the first time it is needed.
+Stanza's Galician model is downloaded automatically the first time it is needed.
 
 ## Usage
 
@@ -88,16 +90,16 @@ print(gama_verse.preprocess(poem))
 
 ## License
 
-Gumper (`src/gama_verse/gumper/gumper.py`) is based on Jumper, which is used with its authors' permission. The rest is licensed under GPLv3. See [LICENSE](LICENSE).
+The scansion module (`src/gama_verse/gumper/gumper.py`) is based on Jumper, which is used with its authors' permission. The rest is licensed under GPLv3. See [LICENSE](LICENSE).
 
 ## Citation
 
 For the implementation in this repository:
 
-> Pablo Ruiz Fabo, Anxo Alonso Pérez, Xabier Suárez Cordero (2026). GAMA: Galician Metrical Analyzer. 
+> Pablo Ruiz Fabo, Anxo Alonso Pérez, Xabier Suárez Cordero (2026). Gama: Galician Metrical Analyzer. 
 
 For the approach:
 
 > Pablo Ruiz Fabo, Pauline Moreau, Anxo Alonso Pérez. (2026). Automatic Metrical Scansion of Galician Poetry: First Results. *Proceedings of PROPOR - 17th International Conference on Computational Processing of Portuguese*
 
-The version described in that paper is at [gama-sym](https://github.com/compellit/gama-sym). This package contains a later version of the code, the one used by the web interface at https://prf2.org/galapagos/.
+The version described in that paper is at [`gama-sym`](https://github.com/compellit/gama-sym). This package contains a later version of the code, the one used by the web interface at https://prf2.org/galapagos/.

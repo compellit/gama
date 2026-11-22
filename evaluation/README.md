@@ -1,6 +1,6 @@
 # Evaluation
 
-`evaluate_scansion.py` evaluates gama-verse scansion against a manually annotated test set. It reports per-line accuracy in exact stress-pattern match and meter match (number of metrical syllables), and stress-pattern accuracy for lines with each metrical license (synalepha, dialepha, syneresis, dieresis...).
+`evaluate_scansion.py` evaluates Gama's scansion against a manually annotated test set. It reports per-line accuracy in exact stress-pattern match and meter match (number of metrical syllables), and stress-pattern accuracy for lines with each metrical license (synalepha, dialepha, syneresis, dieresis...).
 
 Each poem is preprocessed and scanned separately, with `gama_verse.scan()`, so the scansion context (neighbouring lines) comes from the same poem.
 
@@ -8,7 +8,7 @@ Each poem is preprocessed and scanned separately, with `gama_verse.scan()`, so t
 
 The test data are not in this repository. They can be shared upon request. A small amount of the material comes from unpublished editions of 19th-century text. We accessed these data under a reuse agreement with the data owners which does not allow us to redistribute publicly.
 
-The test set has 800 lines from 34 poems. The annotation criteria are described in [gama-sym](https://github.com/compellit/gama-sym/blob/main/src/scansion/eval/data/annotation-criteria.md).
+The test set has 800 lines from 34 poems. The annotation criteria are described in [`gama-sym`](https://github.com/compellit/gama-sym/blob/main/src/scansion/eval/data/annotation-criteria.md).
 
 Two files are needed:
 
@@ -17,13 +17,13 @@ Two files are needed:
 
 ## Reproducing the published results
 
-After installing gama-verse and downloading its data (see the main [README](../README.md)), run from the repository root:
+After installing `gama-verse` and downloading its data (see the main [README](../README.md)), run from the repository root:
 
 ```bash
 python evaluation/evaluate_scansion.py gl_scansion_gold_test_010_corr.tsv --metadata merged_df_test_010.tsv -o scansion_eval.tsv
 ```
 
-The script needs pandas, besides gama-verse. With `-o`, the per-line results are written to a TSV file.
+The script needs `pandas`, besides `gama-verse`. With `-o`, the per-line results are written to a TSV file.
 
 Output:
 
