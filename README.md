@@ -1,5 +1,7 @@
 # Gama
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24443052.svg)](https://doi.org/10.5281/zenodo.24443052)
+
 Galician Metrical Analyzer · 🦌
 
 Metrical scansion of Galician poetry. For each line of a poem, Gama gives the number of metrical syllables, the stressed syllables and the line type (e.g. *endecasílabo melódico puro*).
@@ -96,7 +98,7 @@ The scansion module (`src/gama_verse/gumper/gumper.py`) is based on Jumper, whic
 
 For the implementation in this repository:
 
-> Pablo Ruiz Fabo, Anxo Alonso Pérez, Xabier Suárez Cordero (2026). Gama: Galician Metrical Analyzer. 
+> Pablo Ruiz Fabo, Anxo Alonso Pérez, Xabier Suárez Cordero (2026). Gama: Galician Metrical Analyzer. CiTIUS, Universidade de Santiago de Compostela. https://doi.org/10.5281/zenodo.24443052
 
 For the approach:
 

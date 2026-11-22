@@ -15,6 +15,7 @@ authors:
   - family-names: Suárez Cordero
     given-names: Xabier
     affiliation: "CiTIUS, Universidade de Santiago de Compostela"
+doi: 10.5281/zenodo.24443052
 repository-code: "https://github.com/compellit/gama"
 license: GPL-3.0-only
 keywords:
