@@ -1,0 +1,60 @@
+{
+  "title": "Gama: Galician Metrical Analyzer",
+  "description": "<p>Metrical scansion of Galician poetry. For each line of a poem, Gama gives the number of metrical syllables, the stressed syllables and the line type (e.g. <em>endecasílabo melódico puro</em>).</p><p>Scansion has two steps: preprocessing (spelling normalization with a KenLM language model and vocabularies, and other changes such as identifying lexically unstressed words with the Stanza tagger) and scansion, with a Galician adaptation of Jumper.</p>",
+  "creators": [
+    {
+      "name": "Ruiz Fabo, Pablo",
+      "affiliation": "CiTIUS, Universidade de Santiago de Compostela",
+      "orcid": "0000-0002-4349-4835"
+    },
+    {
+      "name": "Alonso Pérez, Anxo",
+      "affiliation": "CiTIUS, Universidade de Santiago de Compostela",
+      "orcid": "0009-0007-0143-2656"
+    },
+    {
+      "name": "Suárez Cordero, Xabier",
+      "affiliation": "CiTIUS, Universidade de Santiago de Compostela"
+    }
+  ],
+  "upload_type": "software",
+  "keywords": [
+    "Galician",
+    "poetry",
+    "metrical scansion",
+    "meter",
+    "spelling normalization"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://aclanthology.org/2026.propor-1.101/",
+      "relation": "isDocumentedBy",
+      "resource_type": "publication-conferencepaper"
+    },
+    {
+      "identifier": "https://github.com/compellit/gama-sym",
+      "relation": "isDerivedFrom",
+      "resource_type": "software"
+    },
+    {
+      "identifier": "https://github.com/grmarco/jumper",
+      "relation": "isDerivedFrom",
+      "resource_type": "software"
+    },
+    {
+      "identifier": "https://huggingface.co/compellit/gama-verse-data",
+      "relation": "isSupplementedBy",
+      "resource_type": "dataset"
+    }
+  ],
+  "references": [
+    "Ruiz Fabo, P., Moreau, P., & Alonso Pérez, A. (2026). Automatic Metrical Scansion of Galician Poetry: First Results. In Proceedings of the 17th International Conference on Computational Processing of Portuguese (PROPOR 2026) - Vol. 1, pp. 994-1004, Salvador, Brazil. Association for Computational Linguistics. https://aclanthology.org/2026.propor-1.101/"
+  ],
+  "license": "gpl-3.0-only",
+  "language": "eng",
+  "grants": [
+    {
+      "id": "10.13039/501100000780::101149659"
+    }
+  ]
+}

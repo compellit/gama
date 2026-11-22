@@ -1,0 +1,46 @@
+cff-version: 1.2.0
+message: "The software can be cited with the paper below, which describes the approach. This repository holds a later version of the code, which reproduces the paper's results."
+type: software
+title: "Gama: Galician Metrical Analyzer"
+abstract: "Metrical scansion of Galician poetry. For each line of a poem, Gama gives the number of metrical syllables, the stressed syllables and the line type."
+authors:
+  - family-names: Ruiz Fabo
+    given-names: Pablo
+    affiliation: "CiTIUS, Universidade de Santiago de Compostela"
+    orcid: "https://orcid.org/0000-0002-4349-4835"
+  - family-names: Alonso Pérez
+    given-names: Anxo
+    affiliation: "CiTIUS, Universidade de Santiago de Compostela"
+    orcid: "https://orcid.org/0009-0007-0143-2656"
+  - family-names: Suárez Cordero
+    given-names: Xabier
+    affiliation: "CiTIUS, Universidade de Santiago de Compostela"
+repository-code: "https://github.com/compellit/gama"
+license: GPL-3.0-only
+keywords:
+  - Galician
+  - poetry
+  - metrical scansion
+  - meter
+  - spelling normalization
+preferred-citation:
+  type: conference-paper
+  title: "Automatic Metrical Scansion of Galician Poetry: First Results"
+  authors:
+    - family-names: Ruiz Fabo
+      given-names: Pablo
+    - family-names: Moreau
+      given-names: Pauline
+    - family-names: Alonso Pérez
+      given-names: Anxo
+  year: 2026
+  collection-title: "Proceedings of the 17th International Conference on Computational Processing of Portuguese (PROPOR 2026) - Vol. 1"
+  publisher:
+    name: Association for Computational Linguistics
+  conference:
+    name: PROPOR 2026
+    city: Salvador
+    country: BR
+  start: 994
+  end: 1004
+  url: "https://aclanthology.org/2026.propor-1.101/"
