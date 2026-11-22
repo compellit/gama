@@ -1,6 +1,6 @@
 {
   "title": "Gama: Galician Metrical Analyzer",
-  "description": "<p>Metrical scansion of Galician poetry. For each line of a poem, Gama gives the number of metrical syllables, the stressed syllables and the line type (e.g. <em>endecasílabo melódico puro</em>).</p><p>Scansion has two steps: preprocessing (spelling normalization with a KenLM language model and vocabularies, and other changes such as identifying lexically unstressed words with the Stanza tagger) and scansion, with a Galician adaptation of Jumper.</p>",
+  "description": "<p>Metrical scansion of Galician poetry. For each line of a poem, Gama gives the number of metrical syllables, the stressed syllables and the line type (e.g. <em>endecasílabo melódico puro</em>).</p><p>Scansion has two steps: preprocessing (spelling normalization with a KenLM language model and vocabularies, and other changes such as identifying lexically unstressed words with the Stanza tagger) and scansion, with a Galician adaptation of Jumper.</p><p>License: the scansion module (<code>src/gama_verse/gumper/gumper.py</code>) is based on Jumper (Marco Remón &amp; Gonzalo 2021, https://github.com/grmarco/jumper), which has no license; it is used with its authors' permission and is not covered by the GPLv3 license of the rest of the code. See LICENSE.</p>",
   "creators": [
     {
       "name": "Ruiz Fabo, Pablo",
@@ -32,9 +32,10 @@
       "resource_type": "publication-conferencepaper"
     },
     {
-      "identifier": "https://github.com/compellit/gama-sym",
-      "relation": "isDerivedFrom",
-      "resource_type": "software"
+      "identifier": "10.5281/zenodo.19422562",
+      "relation": "isNewVersionOf",
+      "resource_type": "software",
+      "scheme": "doi"
     },
     {
       "identifier": "https://github.com/grmarco/jumper",
