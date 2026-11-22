@@ -16,7 +16,7 @@ from __future__ import annotations
 import functools
 from types import SimpleNamespace
 
-__version__ = "0.1.0"
+__version__ = "1.0.0"
 __all__ = ["load_resources", "preprocess", "scan"]
 
 
