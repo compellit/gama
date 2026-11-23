@@ -84,11 +84,9 @@ import gama_verse
 poem = "Cando penso que te fuches,\nnegra sombra que me asombras,"
 for row in gama_verse.scan(poem):
     print(row["metrical_syllables"], row["stressed_syllables"], row["line_type"])
-
-print(gama_verse.preprocess(poem))
 ```
 
-`scan` returns one dict per line of verse, with the same keys as the command line columns (except `file`). The resources are loaded on the first call and reused afterwards.
+`scan` returns one dict per line of verse, with the same keys as the command line columns (except `file`). It preprocesses the text prior to scansion. Call `gama_verse.preprocess` to get only the preprocessed text, without scansion, like `--prepro-only`. The resources are loaded on the first call and reused afterwards.
 
 ## License
 
